@@ -56,17 +56,21 @@ async function main() {
   const taJobs = [];
   const number_of_users = await prisma.user.count();
 
-  for (let i = 1; i < 6; i++) {
-    const userType = faker.helpers.arrayElement([
-      "faculty",
-      "student",
-      "admin",
-    ]);
+  for (let i = 1; i <= 10; i++) {
+    let userType;
+    if (i === 1) {
+      userType = "admin";
+    } else if (i <= 4) {
+      userType = "faculty";
+    } else {
+      userType = "student";
+    }
+
     const newUser = await prisma.user.create({
       data: {
         smuNo: 123456 + i + number_of_users,
-        username: `johndoe${i + number_of_users}`,
-        email: `johndoe${i + number_of_users}@example.com`,
+        username: `user${i + number_of_users}`,
+        email: `user${i + number_of_users}@example.com`,
         firstName: "John",
         lastName: `Doe${i + number_of_users}`,
         password: "securepassword",
